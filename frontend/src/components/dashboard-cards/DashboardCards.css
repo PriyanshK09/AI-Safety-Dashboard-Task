@@ -126,7 +126,6 @@
   opacity: 0.3;
 }
 
-/* Small mobile screens */
 @media (max-width: 360px) {
   .dashboard-card-content {
     padding: 1rem;
@@ -146,7 +145,6 @@
   }
 }
 
-/* Tablet screens */
 @media (min-width: 640px) {
   .dashboard-cards {
     grid-template-columns: repeat(2, 1fr);
@@ -162,7 +160,6 @@
   }
 }
 
-/* Desktop screens */
 @media (min-width: 1024px) {
   .dashboard-cards {
     grid-template-columns: repeat(4, 1fr);
@@ -170,7 +167,6 @@
   }
 }
 
-/* Landscape orientation on mobile */
 @media (max-height: 500px) and (orientation: landscape) {
   .dashboard-cards {
     grid-template-columns: repeat(2, 1fr);

@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { PlusCircle } from "lucide-react"
+import { PlusCircle, AlertCircle, AlertTriangle, AlertOctagon, Check } from "lucide-react"
 import type { Incident, SeverityType } from "../../lib/types"
 import "./ReportIncidentForm.css"
 
@@ -16,11 +16,12 @@ export function ReportIncidentForm({ onSubmit }: ReportIncidentFormProps) {
   const [description, setDescription] = useState("")
   const [severity, setSeverity] = useState<SeverityType>("medium")
   const [errors, setErrors] = useState<{ title?: string; description?: string }>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Validate form
     const newErrors: { title?: string; description?: string } = {}
 
     if (!title.trim()) {
@@ -36,28 +37,43 @@ export function ReportIncidentForm({ onSubmit }: ReportIncidentFormProps) {
       return
     }
 
-    // Clear errors
     setErrors({})
+    
+    setIsSubmitting(true)
 
-    // Submit the new incident
-    onSubmit({
-      title,
-      description,
-      severity,
-      reportedAt: new Date().toISOString(),
-    })
+    setTimeout(() => {
+      onSubmit({
+        title,
+        description,
+        severity,
+        reportedAt: new Date().toISOString(),
+      })
 
-    // Reset form
-    setTitle("")
-    setDescription("")
-    setSeverity("medium")
+      setIsSubmitting(false)
+      setSubmitSuccess(true)
+      
+      setTimeout(() => {
+        setTitle("")
+        setDescription("")
+        setSeverity("medium")
+        setSubmitSuccess(false)
+      }, 1500)
+    }, 600)
+  }
+
+  const getSeverityIcon = (level: SeverityType) => {
+    switch(level) {
+      case "low": return <AlertCircle size={16} className="severity-icon low" />;
+      case "medium": return <AlertTriangle size={16} className="severity-icon medium" />;
+      case "high": return <AlertOctagon size={16} className="severity-icon high" />;
+    }
   }
 
   return (
     <div className="report-form-card">
       <div className="report-form-header">
         <h3 className="report-form-title">
-          <PlusCircle size={18} className="report-form-icon" />
+          <PlusCircle size={20} className="report-form-icon" />
           Report New Incident
         </h3>
       </div>
@@ -73,8 +89,14 @@ export function ReportIncidentForm({ onSubmit }: ReportIncidentFormProps) {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter incident title"
               className={`form-input ${errors.title ? "error" : ""}`}
+              disabled={isSubmitting || submitSuccess}
             />
-            {errors.title && <p className="form-error">{errors.title}</p>}
+            {errors.title && (
+              <p className="form-error">
+                <AlertCircle size={14} />
+                {errors.title}
+              </p>
+            )}
           </div>
 
           <div className="form-group">
@@ -87,14 +109,20 @@ export function ReportIncidentForm({ onSubmit }: ReportIncidentFormProps) {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe the incident in detail"
               className={`form-textarea ${errors.description ? "error" : ""}`}
+              disabled={isSubmitting || submitSuccess}
             />
-            {errors.description && <p className="form-error">{errors.description}</p>}
+            {errors.description && (
+              <p className="form-error">
+                <AlertCircle size={14} />
+                {errors.description}
+              </p>
+            )}
           </div>
 
           <div className="form-group">
             <label className="form-label">Severity Level</label>
             <div className="radio-group">
-              <div className="radio-item">
+              <label className="radio-item" htmlFor="low">
                 <input
                   type="radio"
                   id="low"
@@ -103,12 +131,15 @@ export function ReportIncidentForm({ onSubmit }: ReportIncidentFormProps) {
                   checked={severity === "low"}
                   onChange={() => setSeverity("low")}
                   className="radio-input low"
+                  disabled={isSubmitting || submitSuccess}
                 />
-                <label htmlFor="low" className="radio-label">
+                <span className="radio-label">
+                  {getSeverityIcon("low")}
                   Low
-                </label>
-              </div>
-              <div className="radio-item">
+                </span>
+              </label>
+              
+              <label className="radio-item" htmlFor="medium">
                 <input
                   type="radio"
                   id="medium"
@@ -117,12 +148,15 @@ export function ReportIncidentForm({ onSubmit }: ReportIncidentFormProps) {
                   checked={severity === "medium"}
                   onChange={() => setSeverity("medium")}
                   className="radio-input medium"
+                  disabled={isSubmitting || submitSuccess}
                 />
-                <label htmlFor="medium" className="radio-label">
+                <span className="radio-label">
+                  {getSeverityIcon("medium")}
                   Medium
-                </label>
-              </div>
-              <div className="radio-item">
+                </span>
+              </label>
+              
+              <label className="radio-item" htmlFor="high">
                 <input
                   type="radio"
                   id="high"
@@ -131,16 +165,31 @@ export function ReportIncidentForm({ onSubmit }: ReportIncidentFormProps) {
                   checked={severity === "high"}
                   onChange={() => setSeverity("high")}
                   className="radio-input high"
+                  disabled={isSubmitting || submitSuccess}
                 />
-                <label htmlFor="high" className="radio-label">
+                <span className="radio-label">
+                  {getSeverityIcon("high")}
                   High
-                </label>
-              </div>
+                </span>
+              </label>
             </div>
           </div>
 
-          <button type="submit" className="submit-button">
-            Submit Incident Report
+          <button 
+            type="submit" 
+            className={`submit-button ${isSubmitting ? 'submitting' : ''} ${submitSuccess ? 'success' : ''}`}
+            disabled={isSubmitting || submitSuccess}
+          >
+            {submitSuccess ? (
+              <>
+                <Check size={18} />
+                Incident Reported
+              </>
+            ) : isSubmitting ? (
+              <>Submitting...</>
+            ) : (
+              <>Submit Incident Report</>
+            )}
           </button>
         </form>
       </div>

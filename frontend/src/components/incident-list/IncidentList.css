@@ -113,7 +113,14 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 0.5rem;
   padding: 1.25rem;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.incident-card.expanded {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .incident-card:hover {
@@ -196,12 +203,45 @@
 
 .details-icon {
   flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.incident-card.expanded .details-icon {
+  transform: rotate(180deg);
+}
+
+.incident-card.expanded .details-button {
+  color: var(--color-primary);
 }
 
 .incident-details {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: top;
+  transform: translateY(-8px);
+}
+
+.incident-card.expanded .incident-details {
+  max-height: 1000px;
+  opacity: 1;
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateY(0);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(62, 206, 206, 0.3); }
+  70% { box-shadow: 0 0 0 6px rgba(62, 206, 206, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(62, 206, 206, 0); }
+}
+
+.incident-card.expanded {
+  animation: pulse 1.5s 1;
 }
 
 .incident-details p {
@@ -216,5 +256,55 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+}
+
+/* Better mobile responsiveness */
+@media (max-width: 639px) {
+  .filter-controls {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .filter-label {
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+  
+  .filter-button {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    min-width: 3.5rem;
+    text-align: center;
+  }
+  
+  .sort-controls {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
+  
+  .incident-card {
+    padding: 1rem;
+  }
+  
+  .incident-meta {
+    gap: 0.5rem;
+  }
+  
+  .details-button {
+    padding: 0.25rem 0.5rem;
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Small screen optimizations */
+@media (max-width: 360px) {
+  .filter-button {
+    min-width: auto;
+    flex-grow: 1;
+    padding: 0.375rem 0.5rem;
   }
 }

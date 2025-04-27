@@ -14,28 +14,22 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Check if we're on mobile based on window width
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth < 1024);
-      // Auto-close sidebar when resizing to desktop
       if (window.innerWidth >= 1024) {
         setIsOpen(false);
       }
     };
     
-    // Initial check
     checkIfMobile();
     
-    // Add event listener
     window.addEventListener('resize', checkIfMobile);
     
-    // Cleanup
     return () => {
       window.removeEventListener('resize', checkIfMobile);
     };
   }, []);
 
-  // Close sidebar when clicking a navigation item on mobile
   const handleSectionChange = (section: string) => {
     onSectionChange(section);
     if (isMobile) {
@@ -54,7 +48,6 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
 
   return (
     <>
-      {/* Hamburger menu button (only visible on mobile) */}
       <button 
         className={`sidebar-toggle ${isOpen ? 'active' : ''}`} 
         onClick={() => setIsOpen(!isOpen)}
@@ -63,7 +56,6 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
       
-      {/* Overlay for mobile when sidebar is open */}
       {isMobile && isOpen && (
         <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />
       )}

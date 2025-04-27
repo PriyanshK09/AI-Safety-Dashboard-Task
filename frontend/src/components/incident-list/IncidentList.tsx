@@ -92,7 +92,7 @@ export function IncidentList({
       ) : (
         <div className="incidents">
           {incidents.map((incident) => (
-            <div key={incident.id} className="incident-card">
+            <div key={incident.id} className={`incident-card ${expandedIds.has(incident.id) ? 'expanded' : ''}`}>
               <div className="incident-header">
                 <div>
                   <h3 className="incident-title">{incident.title}</h3>
@@ -102,7 +102,12 @@ export function IncidentList({
                   </div>
                 </div>
 
-                <button className="details-button" onClick={() => toggleExpanded(incident.id)}>
+                <button 
+                  className="details-button" 
+                  onClick={() => toggleExpanded(incident.id)}
+                  aria-expanded={expandedIds.has(incident.id)}
+                  aria-controls={`incident-details-${incident.id}`}
+                >
                   {expandedIds.has(incident.id) ? (
                     <>
                       <ChevronUp size={16} className="details-icon" />
@@ -117,11 +122,9 @@ export function IncidentList({
                 </button>
               </div>
 
-              {expandedIds.has(incident.id) && (
-                <div className="incident-details">
-                  <p>{incident.description}</p>
-                </div>
-              )}
+              <div className="incident-details" id={`incident-details-${incident.id}`}>
+                <p>{incident.description}</p>
+              </div>
             </div>
           ))}
         </div>

@@ -10,7 +10,6 @@
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
 }
 
-/* Mobile sidebar positioning */
 @media (max-width: 1023px) {
   .sidebar {
     position: fixed;
@@ -27,7 +26,6 @@
   }
 }
 
-/* Hamburger menu toggle button */
 .sidebar-toggle {
   position: fixed;
   top: 1rem;
@@ -56,14 +54,12 @@
   color: #3ecece;
 }
 
-/* Hide toggle on desktop */
 @media (min-width: 1024px) {
   .sidebar-toggle {
     display: none;
   }
 }
 
-/* Overlay for mobile when sidebar is open */
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -80,7 +76,6 @@
   to { opacity: 1; }
 }
 
-/* Close button inside sidebar (for mobile) */
 .sidebar-close {
   position: absolute;
   top: 1rem;

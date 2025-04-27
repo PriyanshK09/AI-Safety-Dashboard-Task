@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Sidebar } from "../../components/sidebar/Sidebar"
 import { TopBar } from "../../components/topbar/TopBar"
 import { DashboardCards } from "../../components/dashboard-cards/DashboardCards"
@@ -17,14 +17,13 @@ export function Dashboard() {
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest")
   const [searchQuery, setSearchQuery] = useState("")
   const [activeSection, setActiveSection] = useState("dashboard")
+  const [notificationCount, setNotificationCount] = useState<number>(initialIncidents.length)
+  const [lastViewedTimestamp, setLastViewedTimestamp] = useState<string>(new Date().toISOString())
 
-  // Filter and sort incidents
   const filteredIncidents = incidents
     .filter((incident) => {
-      // Filter by severity
       const severityMatch = severityFilter === "all" || incident.severity === severityFilter
 
-      // Filter by search query
       const searchMatch =
         incident.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         incident.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -32,13 +31,23 @@ export function Dashboard() {
       return severityMatch && searchMatch
     })
     .sort((a, b) => {
-      // Sort by date
       const dateA = new Date(a.reportedAt).getTime()
       const dateB = new Date(b.reportedAt).getTime()
       return sortOrder === "newest" ? dateB - dateA : dateA - dateB
     })
 
-  // Add new incident
+  const recentIncidents = [...incidents]
+    .sort((a, b) => new Date(b.reportedAt).getTime() - new Date(a.reportedAt).getTime())
+    .slice(0, 5)
+
+  useEffect(() => {
+    const unviewedCount = incidents.filter(
+      incident => new Date(incident.reportedAt) > new Date(lastViewedTimestamp)
+    ).length;
+    
+    setNotificationCount(unviewedCount);
+  }, [incidents, lastViewedTimestamp]);
+
   const handleAddIncident = (incident: Omit<Incident, "id">) => {
     const newIncident: Incident = {
       ...incident,
@@ -47,7 +56,11 @@ export function Dashboard() {
     setIncidents([...incidents, newIncident])
   }
 
-  // Calculate statistics
+  const handleNotificationsViewed = () => {
+    setNotificationCount(0);
+    setLastViewedTimestamp(new Date().toISOString());
+  };
+
   const stats = {
     total: incidents.length,
     high: incidents.filter((i) => i.severity === "high").length,
@@ -60,7 +73,13 @@ export function Dashboard() {
       <Sidebar activeSection={activeSection} onSectionChange={setActiveSection} />
 
       <div className="dashboard-content">
-        <TopBar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+        <TopBar 
+          searchQuery={searchQuery} 
+          onSearchChange={setSearchQuery}
+          recentIncidents={recentIncidents}
+          onNotificationsViewed={handleNotificationsViewed}
+          notificationCount={notificationCount}
+        />
 
         <main className="dashboard-main">
           <div className="dashboard-inner">

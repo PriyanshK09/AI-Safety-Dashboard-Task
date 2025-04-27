@@ -1,65 +1,79 @@
 .report-form-card {
   background-color: #1a1d23;
   border-radius: 0.75rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.report-form-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .report-form-header {
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(to right, rgba(62, 206, 206, 0.05), rgba(62, 206, 206, 0.02));
+  border-radius: 0.75rem 0.75rem 0 0;
 }
 
 .report-form-title {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: var(--font-weight-semibold);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   color: #ffffff;
   letter-spacing: var(--letter-spacing-tight);
 }
 
 .report-form-icon {
   color: #3ecece;
+  filter: drop-shadow(0 0 5px rgba(62, 206, 206, 0.4));
 }
 
 .report-form-content {
-  padding: 1.5rem;
+  padding: 1.75rem;
 }
 
 .report-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .form-label {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: var(--font-weight-medium);
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   letter-spacing: var(--letter-spacing-normal);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
 }
 
 .form-input,
 .form-textarea {
   width: 100%;
-  padding: 0.75rem 1rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
+  padding: 0.875rem 1.125rem;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
   font-family: var(--font-family);
   color: #ffffff;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .form-input::placeholder,
@@ -68,11 +82,18 @@
   font-family: var(--font-family);
 }
 
+.form-input:hover,
+.form-textarea:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
   border-color: #3ecece;
-  box-shadow: 0 0 0 2px rgba(62, 206, 206, 0.2);
+  box-shadow: 0 0 0 3px rgba(62, 206, 206, 0.15);
+  background-color: rgba(255, 255, 255, 0.07);
 }
 
 .form-input.error,
@@ -82,11 +103,11 @@
 
 .form-input.error:focus,
 .form-textarea.error:focus {
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
 }
 
 .form-textarea {
-  min-height: 120px;
+  min-height: 140px;
   resize: vertical;
   line-height: 1.5;
 }
@@ -97,30 +118,51 @@
   margin-top: 0.25rem;
   font-weight: var(--font-weight-normal);
   letter-spacing: var(--letter-spacing-normal);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
 }
 
 .radio-group {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.625rem; /* Reduced from 1rem to 0.625rem */
+  margin-bottom: 0.25rem; /* Added small bottom margin */
 }
 
 .radio-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.875rem;
+  padding: 0.4375rem 0.75rem; /* Slightly reduced vertical padding from 0.5rem to 0.4375rem */
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.radio-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .radio-input {
   appearance: none;
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 1.375rem;
+  height: 1.375rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
   border-radius: 50%;
   outline: none;
   cursor: pointer;
   position: relative;
   background-color: rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.radio-input:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.radio-input:checked {
+  border-width: 2px;
 }
 
 .radio-input:checked::after {
@@ -128,30 +170,57 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
   width: 0.625rem;
   height: 0.625rem;
   border-radius: 50%;
+  animation: radioCheck 0.2s ease;
+}
+
+@keyframes radioCheck {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.radio-input.low {
+  background-color: rgba(16, 185, 129, 0.05);
 }
 
 .radio-input.low:checked {
   border-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
 .radio-input.low:checked::after {
   background-color: #10b981;
 }
 
+.radio-input.medium {
+  background-color: rgba(245, 158, 11, 0.05);
+}
+
 .radio-input.medium:checked {
   border-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
 }
 
 .radio-input.medium:checked::after {
   background-color: #f59e0b;
 }
 
+.radio-input.high {
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
 .radio-input.high:checked {
   border-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
 }
 
 .radio-input.high:checked::after {
@@ -159,28 +228,188 @@
 }
 
 .radio-label {
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
   font-weight: var(--font-weight-normal);
 }
 
 .submit-button {
   width: 100%;
-  padding: 0.75rem 1.5rem;
-  background-color: #3ecece;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(to right, #3ecece, #2eb6b6);
   color: #121419;
   border: none;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: background-color 0.2s;
-  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+  margin-top: 0.75rem;
   font-family: var(--font-family);
   letter-spacing: var(--letter-spacing-normal);
+  box-shadow: 0 4px 10px rgba(62, 206, 206, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.submit-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.7s ease;
 }
 
 .submit-button:hover {
-  background-color: #2eb6b6;
+  background: linear-gradient(to right, #39bebe, #29abab);
+  box-shadow: 0 6px 15px rgba(62, 206, 206, 0.4);
+  transform: translateY(-1px);
+}
+
+.submit-button:hover::before {
+  left: 100%;
+}
+
+.submit-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(62, 206, 206, 0.25);
+}
+
+.submit-button.submitting {
+  background: linear-gradient(to right, #3ecece, #39b5b5);
+  position: relative;
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
+.submit-button.submitting::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.15);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+.submit-button.success {
+  background: linear-gradient(to right, #10b981, #0d9668);
+  cursor: not-allowed;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Form field disabled states */
+.form-input:disabled,
+.form-textarea:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.radio-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Severity icons styling */
+.severity-icon {
+  margin-right: 0.5rem;
+}
+
+.severity-icon.low {
+  color: #10b981;
+}
+
+.severity-icon.medium {
+  color: #f59e0b;
+}
+
+.severity-icon.high {
+  color: #ef4444;
+}
+
+/* Responsive layouts */
+@media (max-width: 768px) {
+  .report-form-content {
+    padding: 1.5rem;
+  }
+  
+  .form-group {
+    gap: 0.5rem;
+  }
+  
+  .radio-group {
+    gap: 0.5rem; /* Reduced from 0.75rem to 0.5rem for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .report-form-header {
+    padding: 1rem 1.25rem;
+  }
+  
+  .report-form-content {
+    padding: 1.25rem;
+  }
+  
+  .report-form-title {
+    font-size: 1.125rem;
+    gap: 0.5rem;
+  }
+  
+  .form-input,
+  .form-textarea {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .submit-button {
+    padding: 0.75rem 1.25rem;
+  }
+  
+  .radio-input {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .radio-input:checked::after {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  .radio-item {
+    padding: 0.5rem 0.5rem; /* Adjusted padding for smallest screens */
+  }
+  
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+  }
 }
