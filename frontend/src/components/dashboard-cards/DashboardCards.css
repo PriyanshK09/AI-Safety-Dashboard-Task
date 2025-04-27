@@ -1,0 +1,135 @@
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  overflow: hidden;
+  transition: all 0.2s;
+  border-radius: 0.5rem;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-card.blue {
+  border-left: 4px solid #3b82f6;
+}
+
+.dashboard-card.red {
+  border-left: 4px solid #ef4444;
+}
+
+.dashboard-card.amber {
+  border-left: 4px solid #f59e0b;
+}
+
+.dashboard-card.green {
+  border-left: 4px solid #10b981;
+}
+
+.dashboard-card-content {
+  padding: 1.25rem;
+}
+
+.dashboard-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.dashboard-card-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.dashboard-card-icon {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.dashboard-card-icon.blue {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.dashboard-card-icon.red {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.dashboard-card-icon.amber {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.dashboard-card-icon.green {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.dashboard-card-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dashboard-card-indicators {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+}
+
+.indicator {
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 9999px;
+}
+
+.indicator.blue {
+  background-color: #3b82f6;
+}
+
+.indicator.red {
+  background-color: #ef4444;
+}
+
+.indicator.amber {
+  background-color: #f59e0b;
+}
+
+.indicator.green {
+  background-color: #10b981;
+}
+
+.indicator.medium {
+  opacity: 0.6;
+}
+
+.indicator.light {
+  opacity: 0.3;
+}
+
+@media (min-width: 640px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
