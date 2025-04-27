@@ -27,7 +27,9 @@ A responsive web application to view, filter, sort, and report AI safety inciden
 
 ## 🖼️ Screenshot
 
-*[Add your screenshot here before submission]*
+![AI Safety Dashboard Screenshot](/screenshot1.png)
+
+![AI Safety Dashboard Screenshot](/screenshot2.png)
 
 ## 🚀 Live Demo
 

@@ -15,6 +15,48 @@ export function Charts({ incidents }: ChartsProps) {
     medium: incidents.filter((i) => i.severity === "medium").length,
     high: incidents.filter((i) => i.severity === "high").length,
   }
+  
+  const total = severityCounts.low + severityCounts.medium + severityCounts.high
+  const percentages = {
+    low: total > 0 ? Math.round((severityCounts.low / total) * 100) : 0,
+    medium: total > 0 ? Math.round((severityCounts.medium / total) * 100) : 0,
+    high: total > 0 ? Math.round((severityCounts.high / total) * 100) : 0,
+  }
+
+  const percentagePlugin = {
+    id: 'percentagePlugin',
+    beforeDraw: function(chart: any) {
+      const ctx = chart.ctx;
+      const chartArea = chart.chartArea;
+      const centerX = (chartArea.left + chartArea.right) / 2;
+      const centerY = (chartArea.top + chartArea.bottom) / 2;
+      
+      const percentageValues = [percentages.low, percentages.medium, percentages.high];
+      
+      const meta = chart.getDatasetMeta(0);
+      
+      ctx.save();
+      
+      meta.data.forEach((arc: any, i: number) => {
+        const middleAngle = arc.startAngle + (arc.endAngle - arc.startAngle) / 2;
+        
+        const radius = (arc.outerRadius - arc.innerRadius) * 0.6 + arc.innerRadius;
+        
+        const x = centerX + Math.cos(middleAngle) * radius;
+        const y = centerY + Math.sin(middleAngle) * radius;
+        
+        if (arc.circumference > 0.2) {
+          ctx.fillStyle = '#fff';
+          ctx.font = 'bold 14px Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`${percentageValues[i]}%`, x, y);
+        }
+      });
+      
+      ctx.restore();
+    }
+  };
 
   const pieData = {
     labels: ["Low", "Medium", "High"],
@@ -67,10 +109,19 @@ export function Charts({ incidents }: ChartsProps) {
                     },
                     titleFont: {
                       family: "Inter, sans-serif"
+                    },
+                    callbacks: {
+                      label: function(context: any) {
+                        const label = context.label || '';
+                        const value = context.raw || 0;
+                        const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                        return `${label}: ${value} (${percentage}%)`;
+                      }
                     }
                   },
                 },
               }}
+              plugins={[percentagePlugin]}
             />
           </div>
         </div>
