@@ -5,20 +5,22 @@
 }
 
 .chart-card {
-  background-color: white;
+  background-color: #1a1d23;
   border-radius: 0.75rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .chart-header {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #f3f4f6;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .chart-title {
   font-size: 1.125rem;
   font-weight: 600;
+  color: #ffffff;
 }
 
 .chart-content {
@@ -70,12 +72,13 @@
 .activity-title {
   font-weight: 500;
   font-size: 0.875rem;
+  color: #ffffff;
 }
 
 .activity-date {
   font-size: 0.75rem;
-  color: #6b7280;
-  margin-top: 0.125rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0.25rem;
 }
 
 @media (min-width: 768px) {

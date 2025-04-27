@@ -26,11 +26,11 @@ export function Charts({ incidents }: ChartsProps) {
       {
         data: [severityCounts.low, severityCounts.medium, severityCounts.high],
         backgroundColor: [
-          "rgba(76, 175, 80, 0.7)", // Green for low
-          "rgba(255, 193, 7, 0.7)", // Amber for medium
-          "rgba(229, 57, 53, 0.7)", // Red for high
+          "rgba(16, 185, 129, 0.7)", // Green for low
+          "rgba(245, 158, 11, 0.7)", // Amber for medium
+          "rgba(239, 68, 68, 0.7)", // Red for high
         ],
-        borderColor: ["rgba(76, 175, 80, 1)", "rgba(255, 193, 7, 1)", "rgba(229, 57, 53, 1)"],
+        borderColor: ["rgba(16, 185, 129, 1)", "rgba(245, 158, 11, 1)", "rgba(239, 68, 68, 1)"],
         borderWidth: 1,
       },
     ],
@@ -57,6 +57,19 @@ export function Charts({ incidents }: ChartsProps) {
                 plugins: {
                   legend: {
                     position: "bottom",
+                    labels: {
+                      color: "rgba(255, 255, 255, 0.7)",
+                      font: {
+                        size: 12,
+                      },
+                    },
+                  },
+                  tooltip: {
+                    backgroundColor: "rgba(26, 29, 35, 0.9)",
+                    titleColor: "#ffffff",
+                    bodyColor: "rgba(255, 255, 255, 0.8)",
+                    borderColor: "rgba(255, 255, 255, 0.1)",
+                    borderWidth: 1,
                   },
                 },
               }}

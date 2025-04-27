@@ -1,6 +1,7 @@
 "use client"
 
-import { LayoutDashboard, AlertTriangle, BarChart2, FileBarChart, Settings, LogOut, PlusCircle } from "lucide-react"
+import { useState, useEffect } from "react"
+import { LayoutDashboard, AlertTriangle, BarChart2, FileBarChart, Settings, LogOut, PlusCircle, Menu, X, User } from "lucide-react"
 import "./Sidebar.css"
 
 interface SidebarProps {
@@ -9,6 +10,39 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if we're on mobile based on window width
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+      // Auto-close sidebar when resizing to desktop
+      if (window.innerWidth >= 1024) {
+        setIsOpen(false);
+      }
+    };
+    
+    // Initial check
+    checkIfMobile();
+    
+    // Add event listener
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+
+  // Close sidebar when clicking a navigation item on mobile
+  const handleSectionChange = (section: string) => {
+    onSectionChange(section);
+    if (isMobile) {
+      setIsOpen(false);
+    }
+  };
+
   const navItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "incidents", label: "Incidents", icon: AlertTriangle },
@@ -19,45 +53,73 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
   ]
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-content">
-        <div className="sidebar-header">
-          <div className="sidebar-logo">
-            <AlertTriangle size={18} />
+    <>
+      {/* Hamburger menu button (only visible on mobile) */}
+      <button 
+        className={`sidebar-toggle ${isOpen ? 'active' : ''}`} 
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+      >
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+      
+      {/* Overlay for mobile when sidebar is open */}
+      {isMobile && isOpen && (
+        <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />
+      )}
+      
+      <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+        <div className="sidebar-content">
+          <div className="sidebar-header">
+            <div className="sidebar-logo">
+              <svg width="40" height="40" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="200" cy="200" r="200" fill="#4A4A4A" />
+                <circle cx="120" cy="120" r="40" fill="white" />
+                <circle cx="280" cy="120" r="40" fill="white" />
+                <circle cx="120" cy="200" r="40" fill="white" />
+                <circle cx="200" cy="200" r="40" fill="white" />
+                <circle cx="280" cy="200" r="40" fill="white" />
+                <circle cx="120" cy="280" r="40" fill="white" />
+                <circle cx="280" cy="280" r="40" fill="white" />
+              </svg>
+            </div>
+            <div className="sidebar-title-container">
+              <h1 className="sidebar-title">AI Safety Hub</h1>
+              <p className="sidebar-subtitle">powered by Humanchain</p>
+            </div>
           </div>
-          <h1 className="sidebar-title">AI Safety Hub</h1>
+
+          <nav className="sidebar-nav">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleSectionChange(item.id)}
+                className={`sidebar-nav-item ${activeSection === item.id ? "active" : ""}`}
+              >
+                <item.icon size={18} />
+                {item.label}
+              </button>
+            ))}
+          </nav>
         </div>
 
-        <nav className="sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => onSectionChange(item.id)}
-              className={`sidebar-nav-item ${activeSection === item.id ? "active" : ""}`}
-            >
-              <item.icon size={18} />
-              {item.label}
+        <div className="sidebar-footer">
+          <div className="sidebar-separator"></div>
+          <div className="sidebar-user">
+            <div className="sidebar-avatar">
+              <User size={24} />
+            </div>
+            <div className="sidebar-user-info">
+              <p className="sidebar-user-name">Priyansh Khare</p>
+              <p className="sidebar-user-role">Safety Analyst</p>
+            </div>
+            <button className="sidebar-logout-button">
+              <LogOut size={16} />
+              <span className="sr-only">Log out</span>
             </button>
-          ))}
-        </nav>
-      </div>
-
-      <div className="sidebar-footer">
-        <div className="sidebar-separator"></div>
-        <div className="sidebar-user">
-          <div className="sidebar-avatar">
-            <img src="/placeholder.svg" alt="User" />
           </div>
-          <div className="sidebar-user-info">
-            <p className="sidebar-user-name">Jane Doe</p>
-            <p className="sidebar-user-role">Safety Analyst</p>
-          </div>
-          <button className="sidebar-logout-button">
-            <LogOut size={16} />
-            <span className="sr-only">Log out</span>
-          </button>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   )
 }
