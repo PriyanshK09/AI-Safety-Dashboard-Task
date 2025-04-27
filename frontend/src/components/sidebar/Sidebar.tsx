@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { LayoutDashboard, AlertTriangle, BarChart2, FileBarChart, Settings, LogOut, PlusCircle, Menu, X, User } from "lucide-react"
+import { LayoutDashboard, AlertTriangle, BarChart2, FileBarChart, Settings, LogOut, PlusCircle, Menu, X, User, ExternalLink, FileText } from "lucide-react"
 import "./Sidebar.css"
 
 interface SidebarProps {
@@ -95,6 +95,27 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
           </nav>
         </div>
 
+        <div className="sidebar-recruiter-links">
+          <a 
+            href="https://priyanshk.netlify.app/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="sidebar-recruiter-link"
+          >
+            <ExternalLink size={16} />
+            Visit My Portfolio
+          </a>
+          <a 
+            href="https://drive.google.com/file/d/1f_ljNmdrx5dDdUCBjcU3tSwdPHEUjsAp/view?usp=drive_link" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="sidebar-recruiter-link"
+          >
+            <FileText size={16} />
+            View My CV
+          </a>
+        </div>
+
         <div className="sidebar-footer">
           <div className="sidebar-separator"></div>
           <div className="sidebar-user">
@@ -103,7 +124,7 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
             </div>
             <div className="sidebar-user-info">
               <p className="sidebar-user-name">Priyansh Khare</p>
-              <p className="sidebar-user-role">Safety Analyst</p>
+              <p className="sidebar-user-role">Student</p>
             </div>
             <button className="sidebar-logout-button">
               <LogOut size={16} />
