@@ -25,6 +25,12 @@ A responsive web application to view, filter, sort, and report AI safety inciden
 - **Notification System**: Track new and unread incident reports
 - **Responsive Design**: Fully responsive layout with mobile-friendly navigation
 
+## 🖊️ Design Reference
+
+![Reference Design](/ref-img.jpg)
+
+The design of this dashboard is inspired by the [HumanChain](https://humanchain.org/) website. The goal was to create a user-friendly interface that allows users to easily navigate and manage AI safety incidents.
+
 ## 🖼️ Screenshot
 
 ![AI Safety Dashboard Screenshot](/screenshot1.png)
